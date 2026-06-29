@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('account_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('created_by')->nullable()->constrained('users');
-            $table->integer('updated_by')->nullable()->constrained('users');
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->timestamps();
         });
     }
