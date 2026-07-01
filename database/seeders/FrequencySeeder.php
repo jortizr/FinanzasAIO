@@ -6,7 +6,7 @@ use App\Models\Frequency;
 use Illuminate\Database\Seeder;
 
 
-class FrecuencySeeder extends Seeder
+class FrequencySeeder extends Seeder
 {
     /**
      * Run the database seeds.

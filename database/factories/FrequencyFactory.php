@@ -10,7 +10,7 @@ use App\Models\Frequency;
 /**
  * @extends Factory<Model>
  */
-class FrecuencyFactory extends Factory
+class FrequencyFactory extends Factory
 {
     protected $model = Frequency::class;
     /**
