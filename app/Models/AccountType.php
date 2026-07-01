@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Account;
 
-class TransactionTypes extends Model
+class AccountType extends Model
 {
     protected $fillable = [
-        'name', 'description', 'created_by', 'updated_by'
+        'name', 'created_by', 'updated_by'
     ];
 
     protected function name(): Attribute
@@ -16,6 +17,10 @@ class TransactionTypes extends Model
         return Attribute::make(
             set: fn (string $value) => strtoupper(trim($value)),
         );
+    }
+
+    public function accounts(){
+        return $this->hasMany(Account::class);
     }
 
     public function creator(){

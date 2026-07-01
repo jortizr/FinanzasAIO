@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Frequencies extends Model
+class TransactionType extends Model
 {
     protected $fillable = [
-        'name', 'period', 'created_by', 'updated_by'
+        'name', 'description', 'created_by', 'updated_by'
     ];
 
     protected function name(): Attribute
