@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Account;
 
 class AccountType extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'name', 'created_by', 'updated_by'
     ];

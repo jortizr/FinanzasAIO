@@ -19,7 +19,7 @@ class TransactionTypeFactory extends Factory
     {
         return [
             'name'=> $this->faker->name(),
-            'description'=> $this->faker->words(5),
+            'description'=> $this->faker->words(5, true),
             'created_by' => User::factory(),
             'updated_by' => User::factory(),
         ];
