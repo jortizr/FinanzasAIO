@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('period', ["Diario", "Semanal", "Quincenal", "Mensual"]);
-            $table->foreign('created_by')->nullable()->constrained('users');
-            $table->foreign('updated_by')->nullable()->constrained('users');
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->timestamps();
         });
     }
