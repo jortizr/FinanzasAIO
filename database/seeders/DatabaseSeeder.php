@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AccountTypeSeeder::class,
             FrequencySeeder::class,
             TransactionTypeSeeder::class,
+            CurrencySeeder::class,
         ]);
 
 
