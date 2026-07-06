@@ -22,8 +22,7 @@ class DatabaseSeeder extends Seeder
             FrequencySeeder::class,
             TransactionTypeSeeder::class,
             CurrencySeeder::class,
+            CurrencyRateSeeder::class,
         ]);
-
-
     }
 }
