@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'exchangerate' => [
+        'api_key' => env('EXCHANGERATE_API_KEY'),
+    ],
 ];
