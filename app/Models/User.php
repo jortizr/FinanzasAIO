@@ -47,4 +47,8 @@ class User extends Authenticatable implements PasskeyUser
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+    public function preferredCurrency(){
+        return $this->belongsTo(Currency::class, 'preferred_currency_id');
+    }
 }

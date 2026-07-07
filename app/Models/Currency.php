@@ -43,4 +43,5 @@ class Currency extends Model
     public function updater(){
         return $this->belongsTo(User::class, 'updated_by');
     }
+
 }

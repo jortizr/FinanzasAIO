@@ -20,6 +20,13 @@ return new class extends Migration
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->timestamps();
         });
+
+        //modificacion de la tabla users
+        Schema::table('users', function (Blueprint $table){
+            $table->foreign('preferred_currency_id')->references('id')
+                    ->on('currencies')
+                    ->onDelete('set null');
+        });
     }
 
     /**
