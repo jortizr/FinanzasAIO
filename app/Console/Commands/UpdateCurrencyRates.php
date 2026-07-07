@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Currency;
+use App\Models\CurrencyRate;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -13,10 +15,6 @@ use Carbon\Carbon;
 #[Description('Command description')]
 class UpdateCurrencyRates extends Command
 {
-    //nombre del comando para ejecutarlo en consola
-    protected $signature = 'app:update-currency-rates';
-
-    //descripcion
     protected $description = 'Obtiene las tasas de cambio diarias desde una API externa y las registra';
     /**
      * Execute the console command.
@@ -28,12 +26,16 @@ class UpdateCurrencyRates extends Command
         //configuracion de la API
         $apiKey = config('services.exchangerate.api_key');
         $baseCurrency = 'USD';
+        if(!$apiKey){
+            $this->error('No se encontro la API key en la configuracion.');
+            return Command::FAILURE;
+        }
 
         $response = Http::get("https://v6.exchangerate-api.com/v6/{$apiKey}/latest/{$baseCurrency}");
 
         if($response->failed()){
-            $this->error('Error al conectar con la API de tasas de cambio');
-            return Command::FAILURE;
+            $this->error('Error al conectar con la API de tasas de cambio'. $response->status());
+            return Command::FAILURE();
         }
 
         $data = $response->json();
@@ -41,8 +43,7 @@ class UpdateCurrencyRates extends Command
         $today = Carbon::today()->toDateString();
 
         //obtener los IDs de tus monedas mapeadas en la base de datos
-        $currencies = DB::table('currencies')->pluck('id', 'code');
-
+        $currencies = Currency::pluck('id', 'code');
         $fromCurrencyId = $currencies[$baseCurrency] ?? null;
 
         if(!$fromCurrencyId){
@@ -53,19 +54,15 @@ class UpdateCurrencyRates extends Command
         //insertar o actualizar respetando el indice unico
         foreach($rates as $currencyCode => $rate){
             if(isset($currencies[$currencyCode])){
-                $toCurrencyId = $currencies[$currencyCode];
-
-                DB::table('currency_rates')->updateOrInsert([
+                CurrencyRate::updateOrCreate([
                     'from_currency_id' => $fromCurrencyId,
-                    'to_currency_id' => $toCurrencyId,
+                    'to_currency_id' => $currencies[$currencyCode],
                     'rate_date' => $today,
                     ],
                     [
                         'rate' => $rate,
                         'created_by' => 1,
                         'updated_by' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
                     ]
                 );
             }
