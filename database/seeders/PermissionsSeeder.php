@@ -18,13 +18,13 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         //creacion de permisos
-
-        Permission::creacte(['name' => 'Eliminar']);
-        Permission::creacte(['name' => 'Crear']);
-        Permission::creacte(['name' => 'Actualizar']);
+        Permission::create(['name' => 'currency.show']);
+        Permission::create(['name' => 'currency.create']);
+        Permission::create(['name' => 'currency.update']);
+        Permission::create(['name' => 'currency.delete']);
 
         $Admin = Role::create(['name' => 'Administrador']);
-        $Admin->getAllPermissions();
+        $Admin->givePermissionTo(Permission::all());
 
         $user = Role::create(['name' => 'Usuario']);
         $user->givePermissionTo(['Crear', 'Actualizar', 'Eliminar']);
